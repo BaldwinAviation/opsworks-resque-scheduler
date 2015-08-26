@@ -7,7 +7,6 @@ env <%= k %>=<%= v %>
 export <%= k %>
 <% end %>
 
-env RAILS_ENV=<%= node['resque-scheduler']['rails_env'] %>
 env VERBOSE=true
 
 pre-start script
@@ -19,7 +18,7 @@ EOF
 
 end script
 
-chdir <%= node['resque-scheduler']['path'] %>
+chdir <%= @deploy[:deploy_to] %>/current
 
 exec sudo -u deploy -E -- bundle exec rake resque:scheduler >> /var/log/resque/<%= @application %>-scheduler.log 2>&1
 
